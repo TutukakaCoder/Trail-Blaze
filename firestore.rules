@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isValidWaitlistEntry() {
+      let data = request.resource.data;
+      return data.name is string && 
+             data.name.size() >= 2 &&
+             data.email is string &&
+             data.email.matches('^[^@]+@[^@]+\\.[^@]+$') &&
+             data.linkedIn is string &&
+             data.linkedIn.matches('^https://.*linkedin\\.com/.*') &&
+             (!('phone' in data) || data.phone is string) &&
+             (!('location' in data) || data.location is string) &&
+             (!('businessSector' in data) || data.businessSector is string) &&
+             (!('message' in data) || data.message is string) &&
+             data.createdAt is timestamp;
+    }
+
+    match /waitlist/{entry} {
+      allow read: if false;  // No public reads
+      allow create: if true  // Allow anyone to join waitlist
+        // Required fields validation
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2
+        && request.resource.data.email is string
+        && request.resource.data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && request.resource.data.linkedin is string  // Note: lowercase 'linkedin'
+        && request.resource.data.createdAt is timestamp
+        
+        // Optional fields validation
+        && (!('company' in request.resource.data) || request.resource.data.company is string)
+        && (!('role' in request.resource.data) || request.resource.data.role is string)
+        && (!('interests' in request.resource.data) || request.resource.data.interests is string);
+      allow update, delete: if false;  // No updates or deletes
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+} 
