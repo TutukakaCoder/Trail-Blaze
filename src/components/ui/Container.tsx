@@ -1,7 +1,22 @@
-export default function Container({ children }: { children: React.ReactNode }) {
+import { clsx } from 'clsx';
+import { containerVariants } from '@/lib/constants/spacing';
+
+interface ContainerProps {
+  children: React.ReactNode;
+  variant?: keyof typeof containerVariants;
+  className?: string;
+}
+
+const Container = ({
+  children,
+  variant = 'default',
+  className
+}: ContainerProps) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className={clsx(containerVariants[variant], className)}>
       {children}
     </div>
   );
-} 
+};
+
+export default Container; 

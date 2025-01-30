@@ -11,6 +11,13 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Header height */
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
   
   body {

@@ -108,116 +108,115 @@ export default function WaitlistModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-slate-900 rounded-lg w-full max-w-md relative"
-      >
-        <div className="p-6 space-y-6">
-          <div className="flex justify-center items-center relative">
-            <h2 className="text-2xl font-bold text-white">Join the Trailblazers</h2>
-            <button
-              onClick={closeModal}
-              className="text-gray-400 hover:text-white transition-colors absolute right-0"
-            >
-              <XMarkIcon className="h-6 w-6" />
-            </button>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={formState.name}
-                onChange={(e) => {
-                  setFormState({...formState, name: e.target.value});
-                  if (errors.name) {
-                    const newErrors = {...errors};
-                    delete newErrors.name;
-                    setErrors(newErrors);
-                  }
-                }}
-                className={`w-full px-4 py-3 bg-slate-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                  errors.name 
-                    ? 'border-red-500 focus:ring-red-500' 
-                    : 'border-slate-700 focus:border-purple-500'
-                }`}
-              />
-              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-              
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={formState.email}
-                onChange={(e) => setFormState({...formState, email: e.target.value})}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-              
-              <input
-                type="url"
-                placeholder="LinkedIn Profile URL"
-                value={formState.linkedin}
-                onChange={(e) => setFormState({...formState, linkedin: e.target.value})}
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              />
-              {errors.linkedin && <p className="text-red-500 text-sm">{errors.linkedin}</p>}
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 flex items-center justify-center">
+      <div className="w-full max-w-md p-6 mx-4 my-8">
+        <div className="relative bg-slate-900 shadow-xl rounded-2xl border border-gray-800">
+          <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-semibold text-white text-center w-full">
+                Join the Trailblazers
+              </h3>
+              <button 
+                onClick={closeModal} 
+                className="absolute right-4 top-4 text-gray-400 hover:text-white"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
             </div>
 
-            <motion.div 
-              initial={false}
-              animate={{ height: formState.showDetails ? 'auto' : 0 }}
-              className="overflow-hidden"
-            >
-              <div className="space-y-4 pt-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-4">
                 <input
                   type="text"
-                  placeholder="Company Name (Optional)"
-                  value={formState.company}
-                  onChange={(e) => setFormState({...formState, company: e.target.value})}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  placeholder="Full Name"
+                  value={formState.name}
+                  onChange={(e) => {
+                    setFormState({...formState, name: e.target.value});
+                    if (errors.name) {
+                      const newErrors = {...errors};
+                      delete newErrors.name;
+                      setErrors(newErrors);
+                    }
+                  }}
+                  className={`w-full px-4 py-3 bg-slate-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                    errors.name 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-slate-700 focus:border-purple-500'
+                  }`}
                 />
+                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
                 
                 <input
-                  type="text"
-                  placeholder="Role (Optional)"
-                  value={formState.role}
-                  onChange={(e) => setFormState({...formState, role: e.target.value})}
+                  type="email"
+                  placeholder="Email Address"
+                  value={formState.email}
+                  onChange={(e) => setFormState({...formState, email: e.target.value})}
                   className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 
-                <textarea
-                  placeholder="What interests you most about Trailblazers? (Optional)"
-                  value={formState.interests}
-                  onChange={(e) => setFormState({...formState, interests: e.target.value})}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none h-24"
+                <input
+                  type="url"
+                  placeholder="LinkedIn Profile URL"
+                  value={formState.linkedin}
+                  onChange={(e) => setFormState({...formState, linkedin: e.target.value})}
+                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 />
+                {errors.linkedin && <p className="text-red-500 text-sm">{errors.linkedin}</p>}
               </div>
-            </motion.div>
 
-            <div className="flex flex-col gap-3">
-              <button
-                type="button"
-                onClick={() => setFormState({...formState, showDetails: !formState.showDetails})}
-                className="text-purple-400 hover:text-purple-300 transition-colors text-sm font-medium"
+              <motion.div 
+                initial={false}
+                animate={{ height: formState.showDetails ? 'auto' : 0 }}
+                className="overflow-hidden"
               >
-                {formState.showDetails ? 'Show Less' : 'Add More Details'}
-              </button>
-              
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Joining...' : 'Join Waitlist'}
-              </button>
-            </div>
-          </form>
+                <div className="space-y-4 pt-4">
+                  <input
+                    type="text"
+                    placeholder="Company Name (Optional)"
+                    value={formState.company}
+                    onChange={(e) => setFormState({...formState, company: e.target.value})}
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  
+                  <input
+                    type="text"
+                    placeholder="Role (Optional)"
+                    value={formState.role}
+                    onChange={(e) => setFormState({...formState, role: e.target.value})}
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  
+                  <textarea
+                    placeholder="What interests you most about Trailblazers? (Optional)"
+                    value={formState.interests}
+                    onChange={(e) => setFormState({...formState, interests: e.target.value})}
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none h-24"
+                  />
+                </div>
+              </motion.div>
+
+              <div className="flex flex-col gap-3">
+                <button
+                  type="button"
+                  onClick={() => setFormState({...formState, showDetails: !formState.showDetails})}
+                  className="text-purple-400 hover:text-purple-300 transition-colors text-sm font-medium"
+                >
+                  {formState.showDetails ? 'Show Less' : 'Add More Details'}
+                </button>
+                
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2 px-4 rounded-lg transition-colors duration-200"
+                >
+                  {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 } 

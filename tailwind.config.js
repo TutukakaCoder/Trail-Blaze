@@ -30,6 +30,18 @@ module.exports = {
           '100%': { opacity: '1' },
         },
       },
+      maxWidth: {
+        '2xl': '42rem',    // narrow
+        '4xl': '56rem',    // default
+        '7xl': '80rem',    // wide
+      },
+      spacing: {
+        section: {
+          sm: '4rem',
+          md: '5rem',
+          lg: '6rem'
+        }
+      }
     },
   },
   plugins: [require('@tailwindcss/forms')],

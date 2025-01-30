@@ -6,7 +6,8 @@ import ScrollProgress from '@/components/ui/ScrollProgress'
 import { Analytics } from '@vercel/analytics/react'
 import ClientOnly from '@/components/ClientOnly'
 import { ModalProvider } from '@/lib/context/ModalContext'
-import Footer from '@/components/Footer'
+import Footer from '@/components/layout/Footer'
+import { NavigationProvider } from '@/lib/context/NavigationContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,6 +51,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({
@@ -60,25 +71,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen bg-slate-900`}>
-        <ClientOnly>
-          <ScrollProgress />
-          <ModalProvider>
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-            <Toaster 
-              position="top-right"
-              toastOptions={{
-                style: {
-                  background: 'rgba(0, 0, 0, 0.9)',
-                  color: 'white',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                },
-              }}
-            />
-          </ModalProvider>
-        </ClientOnly>
+        <NavigationProvider>
+          <ClientOnly>
+            <ScrollProgress />
+            <ModalProvider>
+              <main className="flex-grow">
+                {children}
+              </main>
+              <Footer />
+              <Toaster 
+                position="top-right"
+                toastOptions={{
+                  style: {
+                    background: 'rgba(0, 0, 0, 0.9)',
+                    color: 'white',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                  },
+                }}
+              />
+            </ModalProvider>
+          </ClientOnly>
+        </NavigationProvider>
         <Analytics />
       </body>
     </html>

@@ -7,17 +7,23 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useModal } from '@/lib/context/ModalContext'
 import { Button } from '@/components/ui/Button'
+import { scrollToSection } from '@/lib/utils/scroll'
 
 const navigation = [
-  { name: 'About', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Community', href: '#community' },
-  { name: 'Contact', href: '#contact' },
-]
+  { name: 'About', href: '#about', sectionId: 'about' },
+  { name: 'Services', href: '#services', sectionId: 'services' },
+  { name: 'Community', href: '#community', sectionId: 'community' }
+] as const;
 
 export default function Header() {
   const { openModal } = useModal()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    scrollToSection(sectionId);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -43,6 +49,7 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
+                onClick={(e) => handleNavClick(e, item.sectionId)}
                 className="text-sm font-semibold leading-6 text-white hover:text-gray-300 transition-colors"
               >
                 {item.name}
@@ -82,7 +89,9 @@ export default function Header() {
                       key={item.name}
                       href={item.href}
                       className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-800"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        handleNavClick(e, item.sectionId);
+                      }}
                     >
                       {item.name}
                     </a>

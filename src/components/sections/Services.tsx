@@ -1,63 +1,57 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Container from '@/components/ui/Container';
+import Section from '@/components/ui/Section';
+import { AnimatedElement } from '@/components/ui/AnimatedElement';
+import { useInView } from '@/hooks/useInView';
 
 export default function Services() {
+  const [ref, inView] = useInView({
+    threshold: 0.2,
+    triggerOnce: true
+  });
+
   return (
-    <section className="py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0,
-              transition: { duration: 0.6 }
-            }}
-          >
-            <div className="max-w-2xl mx-auto text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Our Services
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-300">
-                Comprehensive solutions for founders and investors in the AI space.
-              </p>
-            </div>
+    <Section id="services" spacing="default" className="mb-32">
+      <Container variant="wide">
+        <div ref={ref}>
+          <AnimatedElement className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8">
+              Our Services
+            </h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              Comprehensive solutions for modern businesses
+            </p>
+          </AnimatedElement>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-                <div className="motion-content">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-xl font-semibold text-white mb-4">AI Integration</h3>
-                    <p className="text-gray-400">
-                      Strategic implementation of AI solutions to transform your business operations and create value.
-                    </p>
-                  </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 px-4 sm:px-0">
+            <AnimatedElement delay={200} className="group relative">
+              <div className="relative bg-white/5 rounded-2xl p-6 sm:p-8 hover:bg-white/10 transition-colors">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative">
+                  <h3 className="text-xl font-semibold text-white mb-4">AI Integration</h3>
+                  <p className="text-gray-400">
+                    Strategic implementation of AI solutions to transform your business operations and create value.
+                  </p>
                 </div>
               </div>
+            </AnimatedElement>
 
-              <div className="bg-white/5 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-                <div className="motion-content">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-xl font-semibold text-white mb-4">Innovation Consulting</h3>
-                    <p className="text-gray-400">
-                      Expert guidance on rapid innovation and sustainable growth strategies.
-                    </p>
-                  </motion.div>
+            <AnimatedElement delay={400} className="group relative">
+              <div className="relative bg-white/5 rounded-2xl p-6 sm:p-8 hover:bg-white/10 transition-colors">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative">
+                  <h3 className="text-xl font-semibold text-white mb-4">Innovation Consulting</h3>
+                  <p className="text-gray-400">
+                    Expert guidance on rapid innovation and sustainable growth strategies.
+                  </p>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </AnimatedElement>
+          </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 } 
